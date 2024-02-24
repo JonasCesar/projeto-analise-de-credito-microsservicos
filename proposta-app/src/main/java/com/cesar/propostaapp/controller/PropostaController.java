@@ -13,8 +13,12 @@ import com.cesar.propostaapp.service.PropostaService;
 @RestController
 @RequestMapping("/proposta")
 public class PropostaController {
-	
+		
 	private PropostaService propostaService;
+	
+	public PropostaController(PropostaService propostaService) {
+		this.propostaService = propostaService;
+	}
 
 	@PostMapping
 	public ResponseEntity<PropostaResponseDTO> criar(@RequestBody PropostaRequestDTO propostaRequestDTO) {
