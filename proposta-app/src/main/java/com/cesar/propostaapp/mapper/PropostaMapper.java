@@ -8,17 +8,16 @@ import com.cesar.propostaapp.dto.PropostaRequestDTO;
 import com.cesar.propostaapp.dto.PropostaResponseDTO;
 import com.cesar.propostaapp.entity.Proposta;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface PropostaMapper {
 	
 	PropostaMapper INSTANCE = Mappers.getMapper(PropostaMapper.class); // retorna uma instância da implementação de PropostaMapper
 		
 	@Mapping(target = "usuario.nome", source = "nome") // "usuario" de "usuario.nome" se refere ao campo usuario dentro de Proposta (classe destino - alvo). "nome" se refere ao campo nome em "PropostaRequestDTO" (classe origem)
 	@Mapping(target = "usuario.sobrenome", source = "sobrenome")
+	@Mapping(target = "usuario.cpf", source = "cpf")
 	@Mapping(target = "usuario.telefone", source = "telefone")
-	@Mapping(target = "usuario.cpf", source = "cpf")
-	@Mapping(target = "usuario.cpf", source = "cpf")
-	@Mapping(target = "usuario.cpf", source = "cpf")
+	@Mapping(target = "usuario.renda", source = "renda")
 	@Mapping(target= "id", ignore = true)
 	@Mapping(target= "aprovada", ignore = true)
 	@Mapping(target= "integrada", ignore = true)
