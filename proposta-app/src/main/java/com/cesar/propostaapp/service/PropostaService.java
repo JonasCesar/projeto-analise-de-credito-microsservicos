@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.cesar.propostaapp.dto.PropostaRequestDTO;
 import com.cesar.propostaapp.dto.PropostaResponseDTO;
 import com.cesar.propostaapp.entity.Proposta;
+import com.cesar.propostaapp.mapper.PropostaMapper;
 import com.cesar.propostaapp.repository.PropostaRepository;
 
 @Service
@@ -17,8 +18,10 @@ public class PropostaService {
 	}
 	
 	public PropostaResponseDTO criar(PropostaRequestDTO requestDTO) {
-		propostaRepository.save(new Proposta());
-		return null;
+		Proposta proposta = PropostaMapper.INSTANCE.convertDtoToProposta(requestDTO);
+		propostaRepository.save(proposta);
+		
+		return PropostaMapper.INSTANCE.convertEntityToDto(proposta);
 	}
 
 }
