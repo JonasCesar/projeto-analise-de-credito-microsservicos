@@ -1,6 +1,9 @@
 package com.cesar.propostaapp.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +34,11 @@ public class PropostaController {
 				.toUri())
 				.body(response);
 				
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<PropostaResponseDTO>> obterPropostas(){
+		return ResponseEntity.ok(propostaService.obterPropostas());		
 	}
 	
 }
