@@ -1,5 +1,6 @@
 package com.cesar.propostaapp.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,7 +37,7 @@ public class Proposta {
 	
 	/* O JoinColumn ficará sempre na entidade dominante do relacionamento
 	 * (ou seja, a entidade que possui a fk) */
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "id_usuario") 
 	private Usuario usuario;
 
