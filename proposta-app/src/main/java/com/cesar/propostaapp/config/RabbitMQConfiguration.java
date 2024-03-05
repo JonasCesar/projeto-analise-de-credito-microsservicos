@@ -58,8 +58,13 @@ public class RabbitMQConfiguration {
 	}
 	
 	@Bean
-	public Binding criarBinding() { // linha que liga a exchange proposta-pendente.ex à fila proposta-pendente.ms-analise-credito
+	public Binding criarBindingPropostaPendenteMSAnaliseCredito() { // linha que liga a exchange proposta-pendente.ex à fila proposta-pendente.ms-analise-credito
 		return BindingBuilder.bind(criarFilaPropostaPendenteMsAnaliseCredito()).to(criarFanoutExchangePropostaPendente());
+	}
+	
+	@Bean
+	public Binding criarBindingPropostaPendenteMSNotificacao() { // linha que liga a exchange proposta-pendente.ex à fila proposta-pendente.ms-notificacao
+		return BindingBuilder.bind(criarFilaPropostaPendenteMsNotificacao()).to(criarFanoutExchangePropostaPendente());
 	}
 	
 
