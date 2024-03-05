@@ -1,5 +1,9 @@
 package com.cesar.propostaapp.config;
 
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.ExchangeBuilder;
+import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -47,5 +51,16 @@ public class RabbitMQConfiguration {
 	public Queue criarFilaPropostaConcluidaMsNotificacao(){
 		return QueueBuilder.durable("proposta-concluida.ms-notificacao").build(); // fila que será consumida pelo microsserviço ms-notificacao
 	}
+	
+	@Bean
+	public FanoutExchange criarFanoutExchangePropostaPendente() { //criação da exchange
+		return ExchangeBuilder.fanoutExchange("proposta-pendente.ex").build();
+	}
+	
+	@Bean
+	public Binding criarBinding() { // linha que liga a exchange proposta-pendente.ex à fila proposta-pendente.ms-analise-credito
+		return BindingBuilder.bind(criarFilaPropostaPendenteMsAnaliseCredito()).to(criarFanoutExchangePropostaPendente());
+	}
+	
 
 }
