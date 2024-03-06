@@ -2,6 +2,7 @@ package com.cesar.propostaapp.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.cesar.propostaapp.dto.PropostaRequestDTO;
@@ -16,10 +17,16 @@ public class PropostaService {
 	private PropostaRepository propostaRepository;
 	
 	private NotificacaoService notificacaoService;
+
+	private String exchange;
 	
-	public PropostaService(PropostaRepository propostaRepository, NotificacaoService notificacaoService) {
+	public PropostaService(PropostaRepository propostaRepository, 
+							NotificacaoService notificacaoService, 
+							@Value("${rabbitmq.propostapendente.exchange}") String exchange) {
+		
 		this.propostaRepository = propostaRepository;
 		this.notificacaoService = notificacaoService;
+		this.exchange = exchange;
 	}
 	
 	public PropostaResponseDTO criar(PropostaRequestDTO requestDTO) {
@@ -31,7 +38,7 @@ public class PropostaService {
 		
 		// envio do objeto para a exchange.
 		// assim que o objeto chegar na exchange, ele será distribuído para as filas ligadas a ela
-		notificacaoService.notificar(response, "proposta-pendente.ex");  
+		notificacaoService.notificar(response, exchange);  
 		
 		return response;
 	}
