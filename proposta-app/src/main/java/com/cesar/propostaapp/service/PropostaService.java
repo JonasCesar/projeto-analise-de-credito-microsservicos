@@ -15,15 +15,25 @@ public class PropostaService {
 	
 	private PropostaRepository propostaRepository;
 	
-	public PropostaService(PropostaRepository propostaRepository) {
+	private NotificacaoService notificacaoService;
+	
+	public PropostaService(PropostaRepository propostaRepository, NotificacaoService notificacaoService) {
 		this.propostaRepository = propostaRepository;
+		this.notificacaoService = notificacaoService;
 	}
 	
 	public PropostaResponseDTO criar(PropostaRequestDTO requestDTO) {
 		Proposta proposta = PropostaMapper.INSTANCE.convertDtoToProposta(requestDTO);
+		
 		propostaRepository.save(proposta);
 		
-		return PropostaMapper.INSTANCE.convertEntityToDto(proposta);
+		PropostaResponseDTO response = PropostaMapper.INSTANCE.convertEntityToDto(proposta);
+		
+		// envio do objeto para a exchange.
+		// assim que o objeto chegar na exchange, ele será distribuído para as filas ligadas a ela
+		notificacaoService.notificar(response, "proposta-pendente.ex");  
+		
+		return response;
 	}
 
 	public List<PropostaResponseDTO> obterPropostas() {
