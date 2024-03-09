@@ -31,7 +31,7 @@ public class Proposta {
 	
 	private Boolean aprovada;
 	
-	private boolean integrada;
+	private boolean integrada; // integrado com o rabbitmq
 	
 	private String observacao;
 	

@@ -2,6 +2,7 @@ package com.cesar.propostaapp.service;
 
 import java.util.List;
 
+import org.springframework.amqp.AmqpConnectException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -32,15 +33,23 @@ public class PropostaService {
 	public PropostaResponseDTO criar(PropostaRequestDTO requestDTO) {
 		Proposta proposta = PropostaMapper.INSTANCE.convertDtoToProposta(requestDTO);
 		
-		propostaRepository.save(proposta);
+		propostaRepository.save(proposta);			
+				
+		notificarRabbitMQ(proposta);
 		
-		PropostaResponseDTO response = PropostaMapper.INSTANCE.convertEntityToDto(proposta);
-		
+		return PropostaMapper.INSTANCE.convertEntityToDto(proposta);
+	}
+	
+	private void notificarRabbitMQ(Proposta proposta) {
 		// envio do objeto para a exchange.
 		// assim que o objeto chegar na exchange, ele será distribuído para as filas ligadas a ela
-		notificacaoService.notificar(response, exchange);  
 		
-		return response;
+		try {
+			notificacaoService.notificar(proposta, exchange);			
+		} catch (AmqpConnectException exception) {
+			proposta.setIntegrada(false);
+			propostaRepository.save(proposta);
+		}
 	}
 
 	public List<PropostaResponseDTO> obterPropostas() {
