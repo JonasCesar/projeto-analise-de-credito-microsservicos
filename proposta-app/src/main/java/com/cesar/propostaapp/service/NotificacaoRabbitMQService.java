@@ -7,11 +7,11 @@ import com.cesar.propostaapp.dto.PropostaResponseDTO;
 import com.cesar.propostaapp.entity.Proposta;
 
 @Service
-public class NotificacaoService {
+public class NotificacaoRabbitMQService {
 	
 	private RabbitTemplate rabbitTemplate;
 	
-	public NotificacaoService(RabbitTemplate rabbitTemplate) {
+	public NotificacaoRabbitMQService(RabbitTemplate rabbitTemplate) {
 		this.rabbitTemplate = rabbitTemplate;
 	}
 	

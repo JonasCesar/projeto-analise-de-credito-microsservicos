@@ -17,12 +17,12 @@ public class PropostaService {
 	
 	private PropostaRepository propostaRepository;
 	
-	private NotificacaoService notificacaoService;
+	private NotificacaoRabbitMQService notificacaoService;
 
 	private String exchange;
 	
 	public PropostaService(PropostaRepository propostaRepository, 
-							NotificacaoService notificacaoService, 
+							NotificacaoRabbitMQService notificacaoService, 
 							@Value("${rabbitmq.propostapendente.exchange}") String exchange) {
 		
 		this.propostaRepository = propostaRepository;
