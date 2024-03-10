@@ -1,5 +1,7 @@
 package com.cesar.propostaapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -39,6 +41,7 @@ public class Proposta {
 	 * (ou seja, a entidade que possui a fk) */
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "id_usuario") 
+	@JsonManagedReference // fica no lado da entidade dominante (para evitar o problema do recurso infinito na hora da serialização do objeto proposta
 	private Usuario usuario;
 
 }

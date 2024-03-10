@@ -16,11 +16,11 @@ import com.cesar.propostaapp.service.NotificacaoRabbitMQService;
 @Component
 public class PropostaSemIntegracao {
 	
-	private PropostaRepository propostaRepository;
+	private final PropostaRepository propostaRepository;
 	
-	private NotificacaoRabbitMQService notificacaoRabbitMQService;
+	private final NotificacaoRabbitMQService notificacaoRabbitMQService;
 	
-	private String exchange;
+	private final String exchange;
 	
 	private final Logger logger = LoggerFactory.getLogger(PropostaSemIntegracao.class);
 	

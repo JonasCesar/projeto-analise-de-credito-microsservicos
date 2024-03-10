@@ -1,5 +1,7 @@
 package com.cesar.propostaapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,9 +32,10 @@ public class Usuario {
 	private Double renda;
 	
 	/* O mappedBy ficará sempre no "lado fraco" (não dominante) do relacionamento
-	 * Ou seja no lado que não levará a fk da outra tabela
+	 * Ou seja no lado que não levará a fk da outra tabeladominante
 	 * */
 	@OneToOne(mappedBy = "usuario") 
+	@JsonBackReference // fica no lado da entidade NÃO dominante (para evitar o problema do recurso infinito na hora da serialização do objeto proposta
 	private Proposta proposta;
 
 }
