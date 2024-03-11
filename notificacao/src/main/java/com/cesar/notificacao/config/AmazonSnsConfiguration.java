@@ -14,15 +14,15 @@ import com.amazonaws.services.sns.AmazonSNSClientBuilder;
 @Configuration
 public class AmazonSnsConfiguration {
 	
-	@Value("${aws.acessKey}")
-	private String acessKey;
+	@Value("${aws.accessKey}")
+	private String accessKey;
 	
 	@Value("${aws.secretKey}")
 	private String secretKey;
 	
 	@Bean
 	public AWSCredentials awsCredentials() {
-		return new BasicAWSCredentials(acessKey, secretKey);
+		return new BasicAWSCredentials(accessKey, secretKey);
 	}
 	
 	@Bean
