@@ -26,10 +26,10 @@ public class AmazonSnsConfiguration {
 	}
 	
 	@Bean
-	public AmazonSNS anazibSNS() {
+	public AmazonSNS anazonSNS() {
 		return AmazonSNSClientBuilder.standard()
 				.withCredentials(new AWSStaticCredentialsProvider(awsCredentials()))
-				.withRegion(Regions.US_EAST_1).build();
+				.withRegion(Regions.SA_EAST_1).build();
 	}
 
 }
