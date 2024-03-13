@@ -20,8 +20,10 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfiguration {
 	
 	@Value("${rabbitmq.propostapendente.exchange}")
-	private String exchange;
+	private String exchangePropostaPendente;
 	
+	@Value("${rabbitmq.propostaconcluida.exchange}")
+	private String exchangePropostaConcuida;
 	
 	private ConnectionFactory connectionFactory; //interface do pacote amqp.rabbit que já é gerenciada pelo spring
 	
@@ -61,7 +63,12 @@ public class RabbitMQConfiguration {
 	
 	@Bean
 	public FanoutExchange criarFanoutExchangePropostaPendente() { //criação da exchange
-		return ExchangeBuilder.fanoutExchange(exchange).build();
+		return ExchangeBuilder.fanoutExchange(exchangePropostaPendente).build();
+	}
+	
+	@Bean
+	public FanoutExchange criarFanoutExchangePropostaConcluida() { //criação da exchange
+		return ExchangeBuilder.fanoutExchange(exchangePropostaConcuida).build();
 	}
 	
 	@Bean
@@ -72,6 +79,15 @@ public class RabbitMQConfiguration {
 	@Bean
 	public Binding criarBindingPropostaPendenteMSNotificacao() { // linha que liga a exchange proposta-pendente.ex à fila proposta-pendente.ms-notificacao
 		return BindingBuilder.bind(criarFilaPropostaPendenteMsNotificacao()).to(criarFanoutExchangePropostaPendente());
+	}
+	
+	@Bean
+	public Binding criarBindingPropostaConcluidaMSPropostaApp() { // linha que liga a exchange proposta-concluida.ex à fila proposta-concluida.ms-proposta
+		return BindingBuilder.bind(criarFilaPropostaConcluidaMsProposta()).to(criarFanoutExchangePropostaConcluida());
+	}
+	
+	public Binding criarBindingPropostaConcluidaMSNotificacao() { // linha que liga a exchange proposta-concluida.ex à fila proposta-concluida.ms-notificacao
+		return BindingBuilder.bind(criarFilaPropostaConcluidaMsNotificacao()).to(criarFanoutExchangePropostaConcluida());
 	}
 	
 	@Bean
