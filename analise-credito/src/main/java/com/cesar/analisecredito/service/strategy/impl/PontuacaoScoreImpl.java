@@ -2,9 +2,12 @@ package com.cesar.analisecredito.service.strategy.impl;
 
 import java.util.Random;
 
+import org.springframework.stereotype.Component;
+
 import com.cesar.analisecredito.domain.Proposta;
 import com.cesar.analisecredito.service.strategy.CalculoPonto;
 
+@Component
 public class PontuacaoScoreImpl implements CalculoPonto {
 
 	@Override
