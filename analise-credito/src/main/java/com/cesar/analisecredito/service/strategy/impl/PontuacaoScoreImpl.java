@@ -2,11 +2,13 @@ package com.cesar.analisecredito.service.strategy.impl;
 
 import java.util.Random;
 
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.cesar.analisecredito.domain.Proposta;
 import com.cesar.analisecredito.service.strategy.CalculoPonto;
 
+@Order(2)
 @Component
 public class PontuacaoScoreImpl implements CalculoPonto {
 
