@@ -6,6 +6,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.cesar.analisecredito.domain.Proposta;
+import com.cesar.analisecredito.exceptions.StrategyException;
 import com.cesar.analisecredito.service.strategy.CalculoPonto;
 
 @Order(1)
@@ -15,7 +16,7 @@ public class NomeNegativadoImpl implements CalculoPonto {
 	@Override
 	public int calcular(Proposta proposta) {
 		if(nomeNegativado()) {
-			throw new RuntimeException("Nome negativado");
+			throw new StrategyException("Nome negativado");
 		}
 		return 100;
 	}
