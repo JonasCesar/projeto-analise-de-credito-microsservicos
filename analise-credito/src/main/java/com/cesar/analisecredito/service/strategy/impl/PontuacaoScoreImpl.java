@@ -5,6 +5,7 @@ import java.util.Random;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import com.cesar.analisecredito.MensagemConstante;
 import com.cesar.analisecredito.domain.Proposta;
 import com.cesar.analisecredito.exceptions.StrategyException;
 import com.cesar.analisecredito.service.strategy.CalculoPonto;
@@ -18,7 +19,7 @@ public class PontuacaoScoreImpl implements CalculoPonto {
 		int score = score();
 		
 		if(score <= 200) {
-			throw new StrategyException("Score baixo");
+			throw new StrategyException(String.format(MensagemConstante.PONTUACAO_SERASA_BAIXA, proposta.getUsuario().getNome()));
 		} else if(score <= 400) {
 			return 150;
 		} else if(score <= 600) {
